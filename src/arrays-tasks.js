@@ -37,8 +37,12 @@ function getIntervalArray(start, end) {
  *    sumArrays([10, 20, 30], [5, 10, 15]) => [15, 30, 45]
  *    sumArrays([-1, 0, 1], [1, 2, 3, 4]) => [0, 2, 4, 4]
  */
-function sumArrays(/* arr1, arr2 */) {
-  throw new Error('Not implemented');
+function sumArrays(arr1, arr2) {
+  const arr3 = new Array(Math.max(arr1.length, arr2.length));
+  for (let i = 0; i < Math.max(arr1.length, arr2.length); i += 1) {
+    arr3[i] = (arr1[i] || 0) + (arr2[i] || 0);
+  }
+  return arr3;
 }
 
 /**
@@ -119,8 +123,9 @@ function getStringsLength(arr) {
  *   getAverage([ 1, 10, 100, 1000 ])  => 277,75
  *   getAverage([ 2, 3, 3 ])  => 2,67
  */
-function getAverage(/* arr */) {
-  throw new Error('Not implemented');
+function getAverage(arr) {
+  const average = arr.reduce((acc, el) => acc + el, 0) / arr.length;
+  return arr.length === 0 ? 0 : Math.round(average * 100) / 100;
 }
 
 /**
@@ -133,8 +138,8 @@ function getAverage(/* arr */) {
  *    isSameLength(['orange', 'banana', 'cherry']) => true
  *    isSameLength(['cat', 'dog', 'elephant']) => false
  */
-function isSameLength(/* arr */) {
-  throw new Error('Not implemented');
+function isSameLength(arr) {
+  return arr.filter((el) => el.length === arr[0].length).length === arr.length;
 }
 
 /**
@@ -148,8 +153,8 @@ function isSameLength(/* arr */) {
  *    isValueEqualsIndex([2, 1, 0, 4, 5]) => true
  *    isValueEqualsIndex([10, 20, 30, 40, 50]) => false
  */
-function isValueEqualsIndex(/* arr */) {
-  throw new Error('Not implemented');
+function isValueEqualsIndex(arr) {
+  return arr.filter((el, ind) => el === ind).length > 0;
 }
 
 /**
@@ -259,8 +264,13 @@ function distinct(arr) {
  *    createNDimensionalArray(4, 2) => [[[[0, 0], [0, 0]], [[0, 0], [0, 0]]], [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]]
  *    createNDimensionalArray(1, 1) => [0]
  */
-function createNDimensionalArray(/* n, size */) {
-  throw new Error('Not implemented');
+function createNDimensionalArray(n, size) {
+  function fillMas(i, mas) {
+    if (i === 1) return new Array(size).fill(mas);
+    return fillMas(i - 1, new Array(size).fill(mas));
+  }
+  if (n === 1) return new Array(size).fill(0);
+  return fillMas(n - 1, new Array(size).fill(0));
 }
 
 /**
