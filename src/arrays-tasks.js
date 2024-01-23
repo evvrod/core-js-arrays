@@ -21,7 +21,9 @@
  *    getIntervalArray(3, 3) => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  return [...Array(end - start + 1)].fill().map((el, ind) => start + ind);
+  return Array.from({ length: end - start + 1 }, (_, ind) => ind + start);
+  // return new Array(end - start + 1).fill().map((_, ind) => start + ind);
+  // return [...Array(end - start + 1)].fill().map((el, ind) => start + ind);
 }
 
 /**
@@ -38,10 +40,13 @@ function getIntervalArray(start, end) {
  *    sumArrays([-1, 0, 1], [1, 2, 3, 4]) => [0, 2, 4, 4]
  */
 function sumArrays(arr1, arr2) {
-  const arr3 = new Array(Math.max(arr1.length, arr2.length));
-  for (let i = 0; i < Math.max(arr1.length, arr2.length); i += 1) {
-    arr3[i] = (arr1[i] || 0) + (arr2[i] || 0);
-  }
+  const arr3 = new Array(Math.max(arr1.length, arr2.length))
+    .fill(0)
+    .map((_, ind) => (arr1[ind] || 0) + (arr2[ind] || 0));
+
+  // for (let i = 0; i < Math.max(arr1.length, arr2.length); i += 1) {
+  //   arr3[i] = (arr1[i] || 0) + (arr2[i] || 0);
+  // }
   return arr3;
 }
 
@@ -139,7 +144,8 @@ function getAverage(arr) {
  *    isSameLength(['cat', 'dog', 'elephant']) => false
  */
 function isSameLength(arr) {
-  return arr.filter((el) => el.length === arr[0].length).length === arr.length;
+  return arr.every((el) => el.length === arr[0].length);
+  // return arr.filter((el) => el.length === arr[0].length).length === arr.length;
 }
 
 /**
@@ -154,7 +160,8 @@ function isSameLength(arr) {
  *    isValueEqualsIndex([10, 20, 30, 40, 50]) => false
  */
 function isValueEqualsIndex(arr) {
-  return arr.filter((el, ind) => el === ind).length > 0;
+  return arr.some((el, ind) => el === ind);
+  // return arr.filter((el, ind) => el === ind).length > 0;
 }
 
 /**
@@ -184,8 +191,7 @@ function insertItem(arr, item, index) {
  *    getHead([ 'a', 'b', 'c', 'd'], 0) => []
  */
 function getHead(arr, n) {
-  arr.splice(n, arr.length - n);
-  return arr;
+  return arr.slice(0, n);
 }
 
 /**
@@ -217,7 +223,8 @@ function getTail(arr, n) {
  *    doubleArray([]) => []
  */
 function doubleArray(arr) {
-  return [...arr, ...arr];
+  return arr.concat(arr);
+  // return [...arr, ...arr];
 }
 
 /**
@@ -284,8 +291,8 @@ function createNDimensionalArray(n, size) {
  *    flattenArray(['a', ['b', ['c', 'd'], 'e'], 'f']) => ['a', 'b', 'c', 'd', 'e', 'f']
  *    flattenArray([1, 2, 3, 4]) => [1, 2, 3, 4]
  */
-function flattenArray(/* nestedArray */) {
-  throw new Error('Not implemented');
+function flattenArray(nestedArray) {
+  return nestedArray.flat(Infinity);
 }
 
 /**
@@ -302,7 +309,8 @@ function flattenArray(/* nestedArray */) {
  *   selectMany(['one','two','three'], (x) => x.split('')) =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-  return arr.map((el) => childrenSelector(el)).flat(1);
+  return arr.flatMap((el) => childrenSelector(el));
+  // return arr.map((el) => childrenSelector(el)).flat(1);
 }
 
 /**
@@ -318,8 +326,8 @@ function selectMany(arr, childrenSelector) {
  *   calculateBalance([ [ 10, 8 ], [ 1, 5 ] ])  => (10 - 8) + (1 - 5) = 2 + -4 = -2
  *   calculateBalance([]) => 0
  */
-function calculateBalance(/* arr */) {
-  throw new Error('Not implemented');
+function calculateBalance(arr) {
+  return arr.map((el) => el[0] - el[1]).reduce((acc, el) => acc + el, 0);
 }
 
 /**
@@ -334,8 +342,14 @@ function calculateBalance(/* arr */) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize) {
+  const result = new Array(Math.ceil(arr.length / chunkSize))
+    .fill(0)
+    .map((_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize));
+  // for (let i = 0; i < arr.length / chunkSize; i += 1) {
+  //   result.push(arr.slice(i * chunkSize, i * chunkSize + chunkSize));
+  // }
+  return result;
 }
 
 /**
